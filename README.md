@@ -1,1 +1,1 @@
-# bearer-auth
+# basic-auth
