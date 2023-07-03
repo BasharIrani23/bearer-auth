@@ -13,18 +13,16 @@ module.exports = async (req, res, next) => {
         const decodedData = base64.decode(theAutodecodedOnly);
 
         const [userName, password] = decodedData.split(":");
-        // console.log(User)
-        User.basicAuthChecker(userName, password)
-            .then((data) => {
-                console.log(data);
-                req.user = data;
-                next();
-            })
-            .catch((err) => {
-                // next ({ massege: err })
-                next(err);
-            });
+
+        try {
+            const data = await User.basicAuthChecker(userName, password);
+            console.log(data);
+            req.user = data;
+            next();
+        } catch (err) {
+            next(err);
+        }
     } else {
-        next({ massege: "Please enter username and the password" });
+        next({ message: "Please enter username and the password" });
     }
 };
