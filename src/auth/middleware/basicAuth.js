@@ -16,10 +16,11 @@ module.exports = async (req, res, next) => {
 
         try {
             const data = await User.basicAuthChecker(userName, password);
-            console.log(data);
+
             req.user = data;
             next();
         } catch (err) {
+            console.log(err);
             next(err);
         }
     } else {
